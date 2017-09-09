@@ -1,0 +1,99 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage[noend]{algpseudocode}
+\graphicspath{{./}}
+
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{Exercise 2 }
+\author{Francesco Segala 3521885 Manos ??????? Sergio ???????? }
+\maketitle
+
+\section{The Assignement}
+Submit the encryption key you used, the decrypted text, and the source of your program.
+\subsection{Mapping key}
+
+A substituction algorith is applied to a web page, our goal is to find the key of this algorithm and to
+obtain the orignial text.\\
+To cope with this we follow the insight of the assignment in such a way that we can easily find the mapping function
+that maps the plaintext to the encrypted one.\\
+We come up with this mapping key:
+
+\framebox[\linewidth]{ uoieazyxwvtsrqpnmlkjhgfdcb }\par
+
+ With the same logic for capital letters, ignoring all other symbols.
+
+\subsection{The code}
+Once we found the mapping key the algorithm to build is trivial :
+
+
+\begin{lstlisting}[language=Python]
+
+mapped_key="uoieazyxwvtsrqpnmlkjhgfdcb"
+mapped_key_capital=mapped_key.upper()
+mapped_key=mapped_key+mapped_key_capital
+origin_key="abcdefghijklmnopqrstuvwxyz"
+origin_key_capital=origin_key.upper()
+origin_key=origin_key+origin_key_capital
+
+diz={}
+for index in range(0,len(mapped_key )):
+    diz[mapped_key[index]] = origin_key[index]
+
+encrypted_txt="path for the encrypted file"
+result="path of the result file"
+
+def decrypt(in_path, out_path):
+    encr=open(in_path,"r").read()
+    decrypted=open(out_path,"w+")
+    for letter in encr :
+        if letter.isalpha() :
+            resletter=diz[letter]
+            decrypted.write(resletter)
+        else:
+            decrypted.write(letter)
+
+decrypt(encrypted_txt,result)
+\end{lstlisting}
+
+\subsection{Plaintext}
+
+so we finally post the decripted page at the link \href{https://security.rug.nl/infosec/intro/2017.enc}{intro/2017.enc} as follow:
+\begin{lstlisting}
+9 common security awareness mistakes (and how to fix them)
+
+To err is human, but to err in cyber security can cause major damage to an
+organization. It will never be possible to be perfect, but major improvement
+is possible, just by being aware of some of the most common mistakes and their
+consequences.
+
+
+
+1. Falling for phishing: One of the most common mistakes.
+2. Unauthorized application or cloud use, known as shadow IT.
+3. Weak or misused passwords
+4. Remote insecurity: This is the common practice of transferring files
+   between work and personal computers
+5. Disabling security controls: This is usually done by users with
+   administrative privileges, to make things easier for employees
+6. Clueless social networking
+7. Poor mobile security
+8. Too many privileges
+9. Failure to update or patch software
+
+See also http://www.csoonline.com/article/2877259/security-awareness/
+            nine-common-security-awareness-mistakes-and-how-to-fix-them.html
+
+\end{lstlisting}
+
+
+
+
+\end{document}
